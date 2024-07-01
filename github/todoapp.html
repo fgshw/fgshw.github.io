@@ -23,6 +23,15 @@
 
             let listElement = document.getElementById("listtodo");
             listElement.appendChild(newElement);
+
+            let deleteButton = document.createElement("button");
+            deleteButton.classlist.add("btn", "btn-danger", "btn-sm", "float-end");
+            deleteButton.innerText = "ลบ";
+            deleteButton.onclick = fuction()
+            this.parentElement.remove();
+            
+            newElement.appendChild(deleteButton);
+
         }
     </script>
     <div class="container"> 
