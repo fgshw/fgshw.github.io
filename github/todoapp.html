@@ -17,7 +17,7 @@
             const inputValue = document.getElementById("input").value;
             //create new element <li>
             let newElement = document.createElement("li"); //<li></li>
-            newElement.classList.add("list-group-item");
+            newElement.classList.add("list-group-item"); //<li class="list-group-item"></li>
             let newTxtElement = document.createTextNode(inputValue); //create Text
             newElement.appendChild(newTxtElement); //<li>Text</li>
 
@@ -44,8 +44,7 @@
                 </div>
             </div>
             <div class="col col-md-8 col-sm-12">
-                <ul class="list-group">
-                    <ul class="list-group" id="listtodo">
+                <ul class="list-group" id="listtodo">
                     <li class="list-group-item">An item</li>
                 </ul>
             </div>
