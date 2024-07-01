@@ -14,6 +14,9 @@
             let newElement = document.createElement("li"); //<li></li>
             let newTxtElement = document.createTextNode(inputValue); //create Text
             newElement.appendChild(newTxtElement); //<li>Text</li>
+
+            let listElement = document.getElementById("listtodo");
+            listElement.appendChild(newElement);
         }
     </script>
     <div class="container"> 
