@@ -15,14 +15,13 @@
     <script>
         function addtodo() {
         const inputValue = document.getElementById("input").value;
-        if (inputValue.trim() === "") return; // ไม่เพิ่มรายการว่างเปล่า
+        //if (inputValue.trim() === "") return; 
         let newElement = document.createElement("li");
         newElement.classList.add("list-group-item");
 
         let newTxtElement = document.createTextNode(inputValue);
         newElement.appendChild(newTxtElement);
 
-        // ปุ่มลบ
         let deleteButton = document.createElement("button");
         deleteButton.classList.add("btn", "btn-danger", "btn-sm", "float-end");
         deleteButton.innerText = "x";
@@ -34,7 +33,7 @@
         let listElement = document.getElementById("listtodo");
         listElement.appendChild(newElement);
 
-        document.getElementById("input").value = ""; // ลบข้อความใน input
+        document.getElementById("input").value = ""; 
       }
         
     </script>
