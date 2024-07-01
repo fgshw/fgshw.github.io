@@ -11,12 +11,12 @@
       //let j = "test";
       const k = 3;
 
-      function plus(a,b){
+      function plus(){
         console.log(a+b);
       }
       const multip = (a,b) => {return a*b;}
       const result = plus(1,2);
-      console.log(i, j, k, plsu(1,2), multip(2,2));
+      console.log(i, j, k, multip(2,2));
       console.log("this is inline JS"); //open on command
       window.alert("Welcome to JS");
     </script>
@@ -26,17 +26,19 @@
       <div class="row">
         </div>
         <div class="col-6">
+
           <h1>My Calculator</h1><br>
-          <input type="number" class="form-control"><br>
-          <input type="number" class="form-control"><br>
-          <input type="number" class="form-control" readonly><br>
+          <input type="number" id="input1" class="form-control"><br> 
+          <input type="number" id="input2" class="form-control"><br>
+          <input type="number" id="output" class="form-control" readonly><br>
 
           <button
             type = "button"
             class = "btn btn-primary"
-            onclick= "()=>{console.log('onclick')}">
+            onclick= "plsu()">
             Click me
           </button>
+          
         </div>
     </div>
     <img src="image/frieren.jpg" class="img-thumbnail" alt="...">
