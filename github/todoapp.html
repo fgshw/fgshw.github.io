@@ -13,30 +13,29 @@
   </head>
   <body>
     <script>
-        function addtodo(){
-            const inputValue = document.getElementById("input").value;
-            //create new element <li>
-            let newElement = document.createElement("li"); //<li></li>
-            newElement.classList.add("list-group-item"); //<li class="list-group-item"></li>
-            let newTxtElement = document.createTextNode(inputValue); //create Text
-            newElement.appendChild(newTxtElement); //<li>Text</li>
+        function addtodo() {
+        const inputValue = document.getElementById("input").value;
+        if (inputValue.trim() === "") return; // ไม่เพิ่มรายการว่างเปล่า
+        let newElement = document.createElement("li");
+        newElement.classList.add("list-group-item");
 
-            //let listElement = document.getElementById("listtodo");
-            //listElement.appendChild(newElement);
+        let newTxtElement = document.createTextNode(inputValue);
+        newElement.appendChild(newTxtElement);
 
-            let deleteButton = document.createElement("button");
-            deleteButton.classlist.add("btn", "btn-danger", "btn-sm", "float-end");
-            deleteButton.innerText = "x";
-            deleteButton.onclick = function () {
-            this.parentElement.remove();
-            };
-            newElement.appendChild(deleteButton);
+        // ปุ่มลบ
+        let deleteButton = document.createElement("button");
+        deleteButton.classList.add("btn", "btn-danger", "btn-sm", "float-end");
+        deleteButton.innerText = "x";
+        deleteButton.onclick = function () {
+          this.parentElement.remove();
+        };
+        newElement.appendChild(deleteButton);
 
-            let listElement = document.getElementById("listtodo");
-            listElement.appendChild(newElement);
+        let listElement = document.getElementById("listtodo");
+        listElement.appendChild(newElement);
 
-            document.getElementById("input").value = "";
-        }
+        document.getElementById("input").value = ""; // ลบข้อความใน input
+      }
         
     </script>
     <div class="container"> 
