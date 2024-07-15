@@ -11,7 +11,7 @@
     />
     <style>
       .card {
-        margin-bottom: 1rem;
+        margin-bottom: 10px;
       }
     </style>
   </head>
@@ -21,7 +21,7 @@
       <div id="name" class="row"></div>
     </div>
     <script>
-      fetch("https://pokeapi.co/api/v2/pokemon")
+      fetch("https://pokeapi.co/api/v2/pokemon?limit=1302&offset=0")
         .then((res) => res.json())
         .then((data) => {
           const datas = data["results"];
@@ -31,7 +31,7 @@
             ele.innerHTML +=
               "<div class='col-3'>" +
               "<div class='card'>" +
-              "<img class='card-img-top src='${imgURL}'>" +
+              `<img class='card-img-top' src='${imgURL}'>` +
               "<div class='card-body'>" +
               element["name"] +
               "</div></div></div>";
