@@ -26,8 +26,8 @@
         .then((data) => {
           const datas = data["results"];
           const ele = document.getElementById("name");
-          datas.forEach((element) => {
-            //https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png
+          datas.forEach((element, index) => {
+            const imgURL = 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/$(index + 1).png';
             ele.innerHTML +=
               "<div class='col-3'>" +
               "<div class='card'>" +
