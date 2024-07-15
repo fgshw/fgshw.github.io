@@ -8,8 +8,17 @@
         </div>
         <script>
             const data = fetch("https://pokeapi.co/api/v2/pokemon")
-                .then((res) => console.log(res))
+                .then((res) => res.json())
+                .then((data) => {
+                    const datas = data["results"];
+                    const ele = document.getElementById("name");
+                    datas.forEach((element) => {
+                        ele.innerHTML += element["name"] + "";
+                    });
+                    console.log(data);
+                })
                 .catch((err) => console.error(err));
         </script>
+        <script></script>
     </body>
 </html>
