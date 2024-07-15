@@ -8,6 +8,8 @@
         </div>
         <script>
             const data = fetch("https://pokeapi.co/api/v2/pokemon")
+                .then((res) => console.log(res))
+                .catch((err) => console.error(err));
         </script>
     </body>
 </html>
