@@ -16,7 +16,7 @@
                     const datas = data["results"];
                     const ele = document.getElementById("name");
                     datas.forEach((element) => {
-                        ele.innerHTML += element["name"] + "";
+                        ele.innerHTML += "<div class='col'>" + element["name"] + "";
                     });
                     console.log(data);
                 })
