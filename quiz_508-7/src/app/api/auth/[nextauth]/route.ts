@@ -6,32 +6,29 @@ import { connectToDatabase } from '../../../lib/mongodbuser';
 
 export default NextAuth({
   session: {
-    strategy: 'jwt', // ใช้ strategy แทน jwt: true
+    strategy: 'jwt',
   },
   providers: [
     CredentialsProvider({
-      // เพิ่ม property credentials
       credentials: {
         username: { label: "Username", type: "text", placeholder: "Username" },
         password: { label: "Password", type: "password", placeholder: "Password" }
       },
       async authorize(credentials) {
         // เชื่อมต่อกับฐานข้อมูล
-        await connectToDatabase().catch((err) => {
-          //console.error('Failed to connect to database:', err);
-          //throw new Error('Failed to connect to database');
-        });
+        await connectToDatabase();
+
+        // ตรวจสอบว่า credentials มีค่าอยู่หรือไม่
+        if (!credentials) {
+          return null; // คืนค่า null หาก credentials ไม่มี
+        }
 
         // ค้นหาผู้ใช้จากชื่อผู้ใช้
-        const user = await User.findOne({ username: credentials?.username });
+        const user = await User.findOne({ username: credentials.username });
         if (!user) {
-          //console.error('User not found');
-          return null;
+          return null; // คืนค่า null หากไม่พบผู้ใช้
         }
-        if (!credentials) {
-          throw new Error('Credentials not provided');
-        }
-        
+
         // ตรวจสอบรหัสผ่าน
         const isValidPassword = await bcrypt.compare(credentials.password, user.password);
         if (isValidPassword) {
@@ -40,7 +37,6 @@ export default NextAuth({
         }
 
         // คืนค่า null เมื่อข้อมูลไม่ถูกต้อง
-        //console.error('Invalid credentials');
         return null;
       },
     }),
