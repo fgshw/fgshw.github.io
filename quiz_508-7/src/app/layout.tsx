@@ -4,18 +4,6 @@ import "./globals.css";
 import SessionLayout from "./SessionLayout"; // นำเข้า SessionLayout
 import type { ReactNode } from "react";
 
-// สร้างฟอนต์ท้องถิ่น
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
-});
-const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-  weight: "100 900",
-});
-
 // Export metadata
 export const metadata: Metadata = {
   title: "Create Next App",
