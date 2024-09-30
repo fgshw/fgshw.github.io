@@ -18,14 +18,14 @@ export default NextAuth({
       async authorize(credentials) {
         // เชื่อมต่อกับฐานข้อมูล
         await connectToDatabase().catch((err) => {
-          console.error('Failed to connect to database:', err);
-          throw new Error('Failed to connect to database');
+          //console.error('Failed to connect to database:', err);
+          //throw new Error('Failed to connect to database');
         });
 
         // ค้นหาผู้ใช้จากชื่อผู้ใช้
         const user = await User.findOne({ username: credentials?.username });
         if (!user) {
-          console.error('User not found');
+          //console.error('User not found');
           return null;
         }
         if (!credentials) {
