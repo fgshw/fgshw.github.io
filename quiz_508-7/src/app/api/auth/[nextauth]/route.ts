@@ -37,7 +37,7 @@ export default NextAuth({
         }
 
         // คืนค่า null เมื่อข้อมูลไม่ถูกต้อง
-        return null;
+        //return null;
       },
     }),
   ],
