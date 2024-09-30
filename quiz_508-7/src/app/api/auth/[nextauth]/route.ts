@@ -40,7 +40,7 @@ export default NextAuth({
         }
 
         // คืนค่า null เมื่อข้อมูลไม่ถูกต้อง
-        console.error('Invalid credentials');
+        //console.error('Invalid credentials');
         return null;
       },
     }),
