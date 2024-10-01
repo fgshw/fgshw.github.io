@@ -51,4 +51,4 @@ def clear_result():
     return render_template('page.html', result=None)
 
 if __name__ == '__main__':
-    app.run(debug=
+    app.run(debug=True)
