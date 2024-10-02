@@ -1,54 +1,58 @@
-from flask import Flask, render_template, request
+from flask import Flask, request, render_template
+import pickle
+import numpy as np
 import pandas as pd
-from sklearn.model_selection import train_test_split
-from sklearn.tree import DecisionTreeClassifier
 
 app = Flask(__name__)
 
-# โหลดชุดข้อมูล (เช่น จาก Kaggle)
-df = pd.read_csv('C:\\Users\\N47 - Rifu\\Downloads\\Decision.tree\\adult.csv')
-df = pd.get_dummies(df, drop_first=True)
+# โหลดโมเดลที่บันทึกไว้
+with open('myopia_model.pkl', 'rb') as f:
+    model = pickle.load(f)
 
-# กำหนดฟีเจอร์และเป้าหมาย (target)
-X = df.drop('income_>50K', axis=1)
-y = df['income_>50K']
-
-# แบ่งข้อมูลสำหรับฝึกและทดสอบ
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
-
-# สร้างโมเดล Decision Tree
-model = DecisionTreeClassifier()
-model.fit(X_train, y_train)
+# โหลดข้อมูลทั้งหมด
+data = pd.read_csv('myopia_prediction_data.csv')
+# แปลง DataFrame เป็น HTML
+data_html = data.to_html(classes='dataframe', header="true", index=False)
 
 @app.route('/')
-def index():
-    return render_template('page.html')
+def home():
+    return render_template('index.html', tables=[data_html], titles=data.columns.values)
 
 @app.route('/predict', methods=['POST'])
 def predict():
-    # รับข้อมูลจากแบบฟอร์ม
-    data = request.form.to_dict()
+    # รับข้อมูลจากฟอร์ม
+    try:
+        Age = float(request.form['Age'])
+        Gender = request.form['Gender']
+        ScreenTimeHoursPerDay = float(request.form['ScreenTimeHoursPerDay'])
+        HasFamilyHistory = int(request.form['HasFamilyHistory'])
+        OutdoorTimeHoursPerDay = float(request.form['OutdoorTimeHoursPerDay'])
+    except ValueError:
+        return render_template('index.html', prediction_text='กรุณากรอกข้อมูลให้ครบถ้วนและถูกต้อง', tables=[data_html], titles=data.columns.values)
 
-    # แปลงข้อมูลเป็น DataFrame เพื่อให้โมเดลทำนาย
-    input_data = pd.DataFrame([data], columns=X.columns)
+    # แปลงค่าของ Gender เป็นตัวเลข (0 = Female, 1 = Male)
+    if Gender.lower() == 'male':
+        Gender = 1
+    else:
+        Gender = 0
 
-    # เปลี่ยนข้อมูลเป็นชนิด float
-    input_data = input_data.astype(float)
+    # เตรียมข้อมูลสำหรับทำนาย
+    input_features = np.array([[Age, Gender, ScreenTimeHoursPerDay, HasFamilyHistory, OutdoorTimeHoursPerDay]])
 
-    # ทำการทำนาย
-    prediction = model.predict(input_data)[0]
+    # ทำนายผล
+    prediction = model.predict(input_features)
+    if prediction[0] == 1:
+        Myopia = 'มีภาวะสายตาสั้น'
+        prediction_class = 'positive'
+    else:
+        Myopia = 'ไม่มีภาวะสายตาสั้น'
+        prediction_class = 'negative'
 
-    # แปลงผลลัพธ์ที่คาดการณ์ให้อยู่ในรูปแบบที่เข้าใจง่าย
-    result = 'มากกว่า 50K' if prediction == 1 else 'ต่ำกว่า 50K'
-
-    # ส่งผลลัพธ์กลับไปที่หน้าเว็บไซต์
-    return render_template('page.html', result=result)
-
-# Route ใหม่สำหรับลบเฉพาะค่าการทำนาย (result)
-@app.route('/clear_result', methods=['POST'])
-def clear_result():
-    # ส่งค่ากลับไปที่หน้าโดยไม่แสดงผลลัพธ์ (result = None)
-    return render_template('page.html', result=None)
+    return render_template('index.html',
+                           prediction_text='ผลลัพธ์: {}'.format(Myopia),
+                           prediction_class=prediction_class,
+                           tables=[data_html],
+                           titles=data.columns.values)
 
 if __name__ == '__main__':
     app.run(debug=True)
