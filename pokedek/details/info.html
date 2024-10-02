@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokemon Info</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" />
+    <style>
+        .container {
+            margin-top: 6rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        img {
+            margin-top: 1rem;
+            width: 300px;
+        }
+
+        .info {
+            display: grid;
+            grid-template-columns: auto auto;
+            gap: 2rem;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h1 id="name" data-id=""></h1>
+        <img id="sprite" src="" alt="Pokemon Sprite" class="shadow-lg p-3 mb-5 bg-body-tertiary rounded" />
+        <div class="info">
+            <div>
+                <div>Height: <span id="height"></span></div>
+                <div>Weight: <span id="weight"></span></div>
+                <div>Types: <span id="types"></span></div>
+                <div>Abilities: <span id="abilities"></span></div>
+            </div>
+            <div class="stat">
+                <h3>Stats</h3>
+                <div id="stats"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const name = urlParams.get("name");
+
+        function updatePokemonInfo(data) {
+            const id = data.id;
+            const height = data.height;
+            const weight = data.weight;
+            const types = data.types
+                .map((typeInfo) => {
+                    const typeName = typeInfo.type.name;
+                    return `<a href="type.html?type=${typeName}" class="btn btn-outline-success">${typeName}</a>`;
+                })
+                .join(" ");
+            const abilities = data.abilities
+                .map((abilityInfo) => {
+                    const abilityName = abilityInfo.ability.name;
+                    return `<a href="ability.html?ability=${abilityName}" class="btn btn-outline-warning">${abilityName}</a>`;
+                })
+                .join(" ");
+            const stats = data.stats
+                .map((statInfo) => {
+                    const statName = statInfo.stat.name;
+                    const statValue = statInfo.base_stat;
+                    return `<div>${statName}: ${statValue}</div>`;
+                })
+                .join("");
+            const spriteUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`;
+
+            document.getElementById("sprite").src = spriteUrl;
+
+            const nameElement = document.getElementById("name");
+            nameElement.innerText = data.name;
+            nameElement.dataset.id = id;
+
+            document.getElementById("height").innerText = `${height / 10} meters`; // height in meters
+            document.getElementById("weight").innerText = `${weight / 10} kg`; // weight in kilograms
+            document.getElementById("types").innerHTML = types;
+            document.getElementById("abilities").innerHTML = abilities;
+            document.getElementById("stats").innerHTML = stats;
+        }
+
+        if (name) {
+            fetch(`https://pokeapi.co/api/v2/pokemon/${name.toLowerCase()}`)
+                .then(res => res.json())
+                .then(data => updatePokemonInfo(data))
+                .catch(err => console.error("Error fetching Pokémon data:", err));
+        } else {
+            document.getElementById("name").innerText = "No Pokémon name provided in query parameter.";
+        }
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
