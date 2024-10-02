@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Bootstrap demo</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <style>
+    .container {
+      margin-top: 4rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center ;
+    }
+
+    .img {
+      height: 500px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="card" style="width: 18rem;">
+      <img class="img" src="profile.jpg" alt="" legth="350px">
+      <div class="card-body">
+        <h5 class="card-title">
+          <p>ชื่อ-สกุล:</p>
+          <p>นาย ณภัทร สีหะวงค์</p>
+        </h5>
+        <p class="card-text">
+        <p>รหัสนักศึกษา: 653450508-7</p>
+        <p>naphat.se@kkumail.com</p>
+        <p>สาขา: CS</p>
+        <h5 class="card-title">
+          โปรเจกท์:
+          <p><a href="https://github.com/Phiphitthon/Pokemon_PVP" target="_blank">Pokemon_PVP (OOP)</a></p>
+          <p><a href="https://phiphitthon.github.io/pipithatna.github.io/pokedex/index.html" target="_blank">Pokedex
+              (Front-end)</a></p>
+        </h5>
+        </p>
+      </div>
+    </div>
+  </div>
+
+
+
+
+  <div class="container">
+    <div class="col-sm-12 col-md-6 ">
+      <h1>My Calculator</h1><br>
+      <input type="number" id="input1" class="form-control"><br>
+      <input type="number" id="input2" class="form-control"><br>
+      <input type="number" id="output" class="form-control" readonly><br>
+      <button type="button" class="btn btn-primary" onclick="plus()">
+        Click me
+      </button>
+    </div>
+    <hr>
+    <br>
+    <a href="todoapp.html" class="btn btn-outline-primary btn-lg" role="button" aria-disabled="true">Goto Todo App</a>
+  </div>
+
+  <script>
+    var i = 1;
+    var i = "test";
+    let j = 2;
+    const k = 3;
+
+    function plus() {
+      const eInput1 = document.getElementById("input1").value;
+      document.getElementById('output').value = eInput1;
+    }
+    const multip = (a, b) => { return a * b; }
+    console.log(i, j, k, multip(2, 2));
+  </script>
+  <script src="index.js" />
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+    crossorigin="anonymous"></script>
+</body>
+
+</html>
