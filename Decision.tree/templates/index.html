@@ -52,7 +52,7 @@
             font-size: 16px;
         }
 
-        input[type="submit"] {
+        input[type="submit"], .show-group-btn {
             margin-top: 20px;
             padding: 10px;
             background-color: #2980b9;
@@ -65,7 +65,7 @@
             transition: background-color 0.3s ease;
         }
 
-        input[type="submit"]:hover {
+        input[type="submit"]:hover, .show-group-btn:hover {
             background-color: #3498db;
         }
 
@@ -123,6 +123,15 @@
             background-color: #e74c3c;
             color: white;
         }
+
+        .group-names {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #ffffff;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            display: none; /* ซ่อนรายชื่อโดยเริ่มต้น */
+        }
     </style>
 </head>
 <body>
@@ -161,6 +170,9 @@
             <!-- ปุ่มสำหรับแสดง/ซ่อนตาราง -->
             <button id="toggle-table-btn" class="toggle-btn">แสดงข้อมูลตาราง</button>
 
+            <!-- ปุ่มสำหรับแสดงรายชื่อสมาชิกกลุ่ม -->
+            <button class="show-group-btn" onclick="showGroupNames()">แสดงรายชื่อสมาชิกกลุ่ม</button>
+
             {% if prediction_text %}
             <div class="prediction {{ prediction_class }}">
                 <h2>{{ prediction_text }}</h2>
@@ -174,6 +186,17 @@
                 {{ table|safe }}
                 {% endfor %}
             </div>
+        </div>
+
+        <!-- รายชื่อสมาชิกกลุ่ม -->
+        <div class="group-names" id="groupNames">
+            <h3>รายชื่อสมาชิกกลุ่ม:</h3>
+            <ul>
+                <li>นาย นัฐวุฒิ สมสีหา 653450109-1</li>
+                <li>ทวีศิลป์ ใจดี 653450509-5</li>
+                <li>นาย พิพิธธน พิพิธกุล 653450097-2</li>
+                <li>นาย ณภัทร สีหะวงค์ 653450508-7</li>
+            </ul>
         </div>
     </main>
 
@@ -189,6 +212,16 @@
                 this.textContent = 'แสดงข้อมูลตาราง';
             }
         });
+
+        // ฟังก์ชันแสดงรายชื่อสมาชิกกลุ่ม
+        function showGroupNames() {
+            const groupNames = document.getElementById('groupNames');
+            if (groupNames.style.display === 'none' || groupNames.style.display === '') {
+                groupNames.style.display = 'block';
+            } else {
+                groupNames.style.display = 'none';
+            }
+        }
     </script>
 </body>
 </html>
